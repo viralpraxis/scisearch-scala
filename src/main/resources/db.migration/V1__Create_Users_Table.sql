@@ -1,0 +1,8 @@
+CREATE TABLE users (
+  id UUID PRIMARY KEY,
+  email VARCHAR(128) NOT NULL,
+  token VARCHAR(256) NOT NULL,
+  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  CONSTRAINT index_on_users_email UNIQUE(email)
+);

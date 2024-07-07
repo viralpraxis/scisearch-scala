@@ -1,0 +1,29 @@
+services:
+  postgresql:
+    image: postgres:16.1-alpine3.18
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=scisearch
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+  scisearch:
+    image: scisearch:1.0.0
+    environment:
+      - SCISEARCH_BIND=0.0.0.0
+      - SCISEARCH_PORT=3000
+      - SCISEARCH_POSTGRESQL_HOST=postgresql
+      - SCISEARCH_POSTGRESQL_PORT=5432
+      - SCISEARCH_POSTGRESQL_DATABASE=scisearch
+      - SCISEARCH_POSTGRESQL_USERNAME=postgres
+      - SCISEARCH_POSTGRESQL_PASSWORD=postgres
+      - SCISEARCH_TOKEN_SALT=a32bc440432f3add7b7df82665037aaf
+      - SCISEARCH_TOKEN_SECRET=cfa1799c4487c1b0909ce7b9bdbed28f
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgresql:
+        condition: service_healthy

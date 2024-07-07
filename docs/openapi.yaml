@@ -1,0 +1,460 @@
+openapi: 3.1.0
+info:
+  title: scisearch
+  version: 1.0.0
+paths:
+  /api/v1/bookmarks:
+    get:
+      tags:
+      - Bookmarks
+      summary: List bookmarks
+      operationId: getApiV1Bookmarks
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookmarkResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+      security:
+      - httpAuth: []
+    post:
+      tags:
+      - Bookmarks
+      summary: Create bookmark
+      operationId: postApiV1Bookmarks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBookmark'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookmarkResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+      security:
+      - httpAuth: []
+  /api/v1/bookmarks/{id}:
+    get:
+      tags:
+      - Bookmarks
+      summary: Find bookmark by ID
+      operationId: getApiV1BookmarksId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookmarkResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+      security:
+      - httpAuth: []
+    delete:
+      tags:
+      - Bookmarks
+      summary: Delete bookmark
+      operationId: deleteApiV1BookmarksId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+      security:
+      - httpAuth: []
+    patch:
+      tags:
+      - Bookmarks
+      summary: Update bookmark
+      operationId: patchApiV1BookmarksId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBookmark'
+        required: true
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+      security:
+      - httpAuth: []
+  /api/v1/papers:
+    get:
+      tags:
+      - Papers
+      summary: Список статей
+      operationId: getApiV1Papers
+      parameters:
+      - name: keyword
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaperResponse'
+        '400':
+          description: 'Invalid value for: query parameter keyword'
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/users:
+    post:
+      tags:
+      - Users
+      summary: Create user
+      operationId: postApiV1Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: 'Invalid value for: body'
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/v1/subscriptions:
+    get:
+      tags:
+      - Subscriptions
+      summary: List subscriptions
+      operationId: getApiV1Subscriptions
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionResponse'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+      security:
+      - httpAuth: []
+    post:
+      tags:
+      - Subscriptions
+      summary: Create subscription
+      operationId: postApiV1Subscriptions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubscription'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+        '400':
+          description: 'Invalid value for: body'
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+      security:
+      - httpAuth: []
+  /api/v1/subscriptions/{id}:
+    get:
+      tags:
+      - Subscriptions
+      summary: Find subscription by ID
+      operationId: getApiV1SubscriptionsId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+        '400':
+          description: 'Invalid value for: path parameter id'
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+      security:
+      - httpAuth: []
+components:
+  schemas:
+    BookmarkResponse:
+      required:
+      - id
+      - identifier
+      - createdAt
+      - updatedAt
+      - userId
+      type: object
+      properties:
+        id:
+          type: string
+          description: Bookmark ID
+          format: uuid
+        identifier:
+          type: string
+          description: Bookmark external identifier
+        comment:
+          type: string
+          description: Bookmark optional user-provided comment
+        createdAt:
+          type: string
+          description: Bookmark creation timestamp
+          format: date-time
+        updatedAt:
+          type: string
+          description: Bookmark last updation timestamp
+          format: date-time
+        userId:
+          type: string
+          description: Owner ID
+          format: uuid
+      description: Закладка
+    CreateBookmark:
+      required:
+      - identifier
+      type: object
+      properties:
+        identifier:
+          type: string
+        comment:
+          type: string
+      description: Bookmark creation request schema
+    CreateSubscription:
+      required:
+      - keyword
+      - notificationPeriodInDays
+      type: object
+      properties:
+        keyword:
+          type: string
+          description: Keyword the subscription is dedicated to
+        notificationPeriodInDays:
+          type: integer
+          description: Period in days to send notifications
+          format: int32
+      description: Запрос создания подписки
+    CreateUser:
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email address
+        password:
+          type: string
+          description: User password
+      description: User creation request schema
+    GenericError:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+    PaperResponse:
+      required:
+      - id
+      - title
+      - updated
+      type: object
+      properties:
+        id:
+          type: string
+          description: Paper ID
+        title:
+          type: string
+          description: Paper title
+        updated:
+          type: string
+          description: Last paper updation time
+      description: Paper response schema
+    SubscriptionResponse:
+      required:
+      - id
+      - keyword
+      - notificationPeriodInDays
+      - createdAt
+      - updatedAt
+      - userId
+      type: object
+      properties:
+        id:
+          type: string
+          description: Subscription ID
+          format: uuid
+        keyword:
+          type: string
+          description: The keyword subscription is applied to
+        notificationPeriodInDays:
+          type: integer
+          description: Notification period (in days)
+          format: int32
+        createdAt:
+          type: string
+          description: Subscription creation timestamp
+          format: date-time
+        updatedAt:
+          type: string
+          description: Subscription last updation timestamp
+          format: date-time
+        lastCheckedAt:
+          type: string
+          description: Subscription last checked timestamp
+          format: date-time
+        userId:
+          type: string
+          description: Owner ID
+          format: uuid
+      description: Subscripriotn
+    UpdateBookmark:
+      type: object
+      properties:
+        comment:
+          type: string
+      description: Bookmark updation request model
+    UserResponse:
+      required:
+      - id
+      - email
+      - createdAt
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          description: User ID
+          format: uuid
+        email:
+          type: string
+          description: User email
+        createdAt:
+          type: string
+          description: User creation timestamp
+          format: date-time
+        updatedAt:
+          type: string
+          description: User last updation timestamp
+          format: date-time
+      description: User
+  securitySchemes:
+    httpAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -ex
+
+wget -O docs/openapi.yaml "http://localhost:$SCISEARCH_PORT/docs/docs.yaml"
